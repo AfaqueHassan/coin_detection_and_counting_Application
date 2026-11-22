@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoinVision AI - Smart Coin Detector & Counter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">🪙 CoinVision <span>Pro</span></div>
+        <div id="statusBadge" class="badge loading">⏳ Loading AI Engine...</div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Control Panel -->
+        <div class="control-card">
+            <div class="upload-area" id="dropZone">
+                <p class="upload-icon">📁</p>
+                <h3>Upload Coins Photo or Drag & Drop</h3>
+                <p class="sub-text">Supports JPG, PNG, WEBP (Best on plain background)</p>
+                <input type="file" id="imageInput" accept="image/*" hidden disabled>
+                <div class="btn-group">
+                    <button id="uploadBtn" class="btn primary" disabled>Choose Image</button>
+                    <button id="cameraBtn" class="btn secondary" disabled>📷 Use Camera</button>
+                </div>
+            </div>
+
+            <!-- Live Camera View (Hidden by default) -->
+            <div id="cameraSection" class="camera-box hidden">
+                <video id="videoInput" autoplay playsinline></video>
+                <div class="btn-group">
+                    <button id="captureBtn" class="btn success">📸 Capture & Count</button>
+                    <button id="closeCameraBtn" class="btn danger">✖ Close Camera</button>
+                </div>
+            </div>
+
+            <!-- Smart Settings & Value Calculator -->
+            <div class="settings-bar">
+                <div class="setting-item">
+                    <label for="coinValue">Value per Coin (Rs / $):</label>
+                    <input type="number" id="coinValue" value="5" min="1">
+                </div>
+                <div class="setting-item">
+                    <label for="sensitivity">Strictness Level: <strong id="sensLabel">Balanced (Auto)</strong></label>
+                    <input type="range" id="sensitivity" min="25" max="75" value="45">
+                </div>
+                <button id="resetBtn" class="btn outline">🔄 Reset</button>
+            </div>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-title">Total Coins Detected</span>
+                <h2 id="coinCount">0</h2>
+            </div>
+            <div class="stat-card highlight">
+                <span class="stat-title">Estimated Total Value</span>
+                <h2><span id="totalValue">0</span></h2>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Export Result</span>
+                <button id="downloadBtn" class="btn success small" disabled>⬇ Download Image</button>
+            </div>
+        </div>
+
+        <!-- Image Comparison Workspace -->
+        <div class="workspace">
+            <div class="panel">
+                <div class="panel-header">Original Input</div>
+                <div class="img-wrapper">
+                    <img id="imageSrc" alt="No image uploaded yet" />
+                    <p id="placeholderText">Upload an image to see preview</p>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">AI Detection Output</div>
+                <div class="img-wrapper">
+                    <canvas id="canvasOutput"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+    <script src="script.js"></script>
+</body>
+</html>
